@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.restapi.sample.user.mapper.UserMapper">
+  <update id="insertUser" parameterType="UserDto">
+    INSERT INTO USERS
+      (ID
+        , NAME
+        , PASSWORD)
+    VALUES
+      (#{id}
+      , #{name}
+      , #{password})
+  </update>
+  
+  <select id="selectUser" parameterType="String" resultType="UserDto">
+    SELECT ID
+            , NAME
+            , PASSWORD
+    FROM USERS
+    WHERE 1=1
+    AND ID = #{id}
+  </select>
+</mapper>

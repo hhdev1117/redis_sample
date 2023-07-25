@@ -1,0 +1,35 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:XE
+    username: system
+    password: oracle
+    driver-class-name: oracle.jdbc.OracleDriver
+  cache:
+    type: redis
+    redis:
+      time-to-live: 3600 # 데이터 유지 시간(sec)
+      cache-null-values: true # null 캐싱 여부
+      host: localhost
+      port: 6379
+
+mybatis:
+  configuration:
+    multiple-result-sets-enabled: false
+    map-underscore-to-camel-case: true
+    call-setters-on-nulls: true
+    jdbc-type-for-null: varchar
+    default-fetch-size: 500
+  mapper-locations: classpath*:mapper/**/*.xml
+  type-aliases-package: com.restapi.sample
+
+logging:
+  level:  # 각 package 별로 로깅 레벨을 지정할 수 있다.
+    com.restapi.sample : error
+    com.restapi.sample.user : debug
+
+springdoc:
+  swagger-ui:
+    enabled: true
