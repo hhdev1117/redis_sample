@@ -1,6 +1,7 @@
 package com.restapi.sample.user.controller;
 
 import com.restapi.sample.user.dto.UserDto;
+import com.restapi.sample.user.service.UserRedisService;
 import com.restapi.sample.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -23,6 +24,8 @@ public class UserController {
 
   private final UserService userService;
 
+  private final UserRedisService userRedisService;
+
   @PostMapping("/add")
   @Operation(summary = "회원등록", description = "회원등록 API입니다.")
   @Parameter(name = "userDTO", description = "입력 파라미터", in = ParameterIn.QUERY)
@@ -37,6 +40,14 @@ public class UserController {
   public List<UserDto> selectUser(@ModelAttribute UserDto userDTO) {
     List<UserDto> resultList = userService.selectUser(userDTO.getId());
 
-    return null;
+    return resultList;
+  }
+
+  @GetMapping("/redistest")
+  @Operation(summary = "Redis 테스트", description = "Redis 테스트 API입니다.")
+  public String selectRedisValue(@ModelAttribute UserDto userDTO) {
+    String value = userRedisService.selectRedisValue(userDTO.getId());
+
+    return value;
   }
 }
