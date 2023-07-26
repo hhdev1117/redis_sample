@@ -9,7 +9,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializer;
 
 @Getter
 @Configuration
@@ -35,10 +35,13 @@ public class RedisConfig {
   * RedisConnection에서 넘어온 byte 값 객체 직렬화
   * */
   @Bean
-  public RedisTemplate<?,?> redisTemplate(){
-    RedisTemplate<byte[], byte[]> redisTemplate = new RedisTemplate<>();
-    redisTemplate.setConnectionFactory(redisConnectionFactory());
-    redisTemplate.setKeySerializer(new StringRedisSerializer());
+  public RedisTemplate<String,Object> redisTemplate(){
+    RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+    redisTemplate.setKeySerializer(RedisSerializer.string());
+    redisTemplate.setValueSerializer(RedisSerializer.string());
+    redisTemplate.setHashKeySerializer(RedisSerializer.string());
+    redisTemplate.setHashValueSerializer(RedisSerializer.string());
+    redisTemplate.setConnectionFactory(this.redisConnectionFactory());
     return redisTemplate;
   }
 }
