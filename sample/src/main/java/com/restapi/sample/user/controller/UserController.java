@@ -30,17 +30,16 @@ public class UserController {
   @Operation(summary = "회원등록", description = "회원등록 API입니다.")
   @Parameter(name = "userDTO", description = "입력 파라미터", in = ParameterIn.QUERY)
   public int insertUser(@RequestBody UserDto userDTO) {
-    int resultCount = userService.insertUser(userDTO);
 
-    return resultCount;
+    return userService.insertUser(userDTO);
   }
 
   @GetMapping("/get")
   @Operation(summary = "회원조회", description = "회원조회 API입니다.")
+  @Parameter(name = "userDTO", description = "입력 파라미터", in = ParameterIn.QUERY)
   public List<UserDto> selectUser(@ModelAttribute UserDto userDTO) {
-    List<UserDto> resultList = userService.selectUser(userDTO.getId());
 
-    return resultList;
+    return userService.selectUser(userDTO.getId());
   }
 
   @GetMapping("/redistest")
